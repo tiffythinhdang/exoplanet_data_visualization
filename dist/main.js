@@ -6314,6 +6314,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dis
 
 /***/ }),
 
+/***/ "./src/dropdown_menu.js":
+/*!******************************!*\
+  !*** ./src/dropdown_menu.js ***!
+  \******************************/
+/*! exports provided: dropdownMenu */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"dropdownMenu\", function() { return dropdownMenu; });\nconst dropdownMenu = (selection, props) => {\n  const {\n    options,\n    // onOptionClicked,\n    // selectedOption\n  } = props;\n\n  let select = selection.selectAll('select').data([null]);\n  select = select.enter().append('select')\n    .merge(select)\n    // .on('change', function () {\n    //   onOptionClicked(this.value);\n    // });\n\n  const option = select.selectAll('option').data(options);\n  option.enter().append('option')\n    .merge(option)\n    .attr('value', d => d)\n    .property('selected', d => d === selectedOption)\n    .text(d => d);\n};\n\n\n//# sourceURL=webpack:///./src/dropdown_menu.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -6322,7 +6334,19 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dis
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! d3 */ \"./node_modules/d3/index.js\");\n\n\nconst svg = Object(d3__WEBPACK_IMPORTED_MODULE_0__[\"select\"])('graph');\n\nObject(d3__WEBPACK_IMPORTED_MODULE_0__[\"csv\"])('../data/phl_hec_all_confirmed.csv')\n  .then(data => {\n    console.log(data)\n  })\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! d3 */ \"./node_modules/d3/index.js\");\n/* harmony import */ var _numeric_cols__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./numeric_cols */ \"./src/numeric_cols.js\");\n/* harmony import */ var _dropdown_menu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dropdown_menu */ \"./src/dropdown_menu.js\");\n\n\n\n\nconst svg = Object(d3__WEBPACK_IMPORTED_MODULE_0__[\"select\"])('graph');\n\n// Read col\nObject(d3__WEBPACK_IMPORTED_MODULE_0__[\"csv\"])('../data/phl_hec_all_confirmed.csv').then(data => {\n  data.forEach((d) => {\n    _numeric_cols__WEBPACK_IMPORTED_MODULE_1__[\"numericColNames\"].forEach(col => {\n      d[col] = +d[col];\n    })     \n  })\n})\n\nconst render = () => {\n  Object(d3__WEBPACK_IMPORTED_MODULE_0__[\"select\"])('#x-menu')\n    .call(_dropdown_menu__WEBPACK_IMPORTED_MODULE_2__[\"dropdownMenu\"], {\n      options: _numeric_cols__WEBPACK_IMPORTED_MODULE_1__[\"numericColNames\"],\n      // onOptionClicked: onXColumnClicked,\n      // selectedOption: xColumn\n    });\n\n  Object(d3__WEBPACK_IMPORTED_MODULE_0__[\"select\"])('#y-menu')\n    .call(_dropdown_menu__WEBPACK_IMPORTED_MODULE_2__[\"dropdownMenu\"], {\n      options: _numeric_cols__WEBPACK_IMPORTED_MODULE_1__[\"numericColNames\"],\n      // onOptionClicked: onYColumnClicked,\n      // selectedOption: yColumn\n    });\n}\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/numeric_cols.js":
+/*!*****************************!*\
+  !*** ./src/numeric_cols.js ***!
+  \*****************************/
+/*! exports provided: numericColNames */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"numericColNames\", function() { return numericColNames; });\n// See script in get_numeric_col.rb to see how these columns name were generated\nconst numericColNames = [\"P. Name KOI\", \"P. Min Mass (EU)\", \"P. Mass (EU)\", \"P. Max Mass (EU)\", \"P. Radius (EU)\", \"P. Density (EU)\", \"P. Gravity (EU)\", \"P. Esc Vel (EU)\", \"P. SFlux Min (EU)\", \"P. SFlux Mean (EU)\", \"P. SFlux Max (EU)\", \"P. Teq Min (K)\", \"P. Teq Mean (K)\", \"P. Teq Max (K)\", \"P. Ts Min (K)\", \"P. Ts Mean (K)\", \"P. Ts Max (K)\", \"P. Surf Press (EU)\", \"P. Mag\", \"P. Appar Size (deg)\", \"P. Period (days)\", \"P. Sem Major Axis (AU)\", \"P. Eccentricity\", \"P. Mean Distance (AU)\", \"P. Inclination (deg)\", \"P. Omega (deg)\", \"S. Mass (SU)\", \"S. Radius (SU)\", \"S. Teff (K)\", \"S. Luminosity (SU)\", \"S. [Fe/H]\", \"S. Age (Gyrs)\", \"S. Appar Mag\", \"S. Distance (pc)\", \"S. RA (hrs)\", \"S. DEC (deg)\", \"S. Mag from Planet\", \"S. Size from Planet (deg)\", \"S. No. Planets\", \"S. No. Planets HZ\", \"S. Hab Zone Min (AU)\", \"S. Hab Zone Max (AU)\", \"P. HZD\", \"P. HZC\", \"P. HZA\", \"P. HZI\", \"P. SPH\", \"P. Int ESI\", \"P. Surf ESI\", \"P. ESI\", \"S. HabCat\", \"P. Habitable\", \"P. Hab Moon\", \"P. Confirmed\"]\n\n//# sourceURL=webpack:///./src/numeric_cols.js?");
 
 /***/ })
 
