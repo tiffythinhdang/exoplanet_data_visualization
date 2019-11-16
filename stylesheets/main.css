@@ -1,3 +1,7 @@
 #axis-options {
   display: flex;
 }
+
+rect {
+  fill: steelblue;
+}

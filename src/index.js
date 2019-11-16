@@ -3,7 +3,9 @@ import {
   csv, 
   scaleLinear,
   scaleBand,
-  max 
+  max,
+  axisLeft,
+  axisBottom
 } from 'd3';
 import { numericColNames } from './numeric_cols';
 import { dropdownMenu } from './dropdown_menu';
@@ -22,7 +24,7 @@ const render = (data) => {
   const yValue = (d) => d["P. Name"];
 
   // Set margin for the graph:
-  const margin = { top: 20, right: 20, bottom: 20, left: 20,}
+  const margin = { top: 50, right: 50, bottom: 50, left: 100,}
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
@@ -34,11 +36,19 @@ const render = (data) => {
   // Map data y-range to graph range
   const yScale = scaleBand()
     .domain(data.map( d => yValue(d) ))
-    .range([0, innerHeight]);
+    .range([0, innerHeight])
+    .padding(0.1);
 
-  // Initialze a group 
+  // Initialze a group to append the graph 
   const g = svg.append('g')
-    .attr('transform', `translate(${margin.left}, ${margin.top})`)
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+  
+  // Set up x-axis and y-axis
+  const yAxis = axisLeft(yScale)
+  const xAxis = axisBottom(xScale)
+  g.append('g').call(yAxis);
+  g.append('g').call(xAxis)
+    .attr('transform', `translate(0, ${innerHeight})`) //move the axis to the bottom
 
 // Render circle for each row
 //   g.selectAll('circle').data(data)
