@@ -6,32 +6,49 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Exoplanet Data Explorer</title>
   <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
+  <link rel="stylesheet" href="./stylesheets/index.css">
 </head>
 
 <body>
-  <header>Exoplanet Data Explorer</header>
+  <header>
+    <h1 class="main title">Exoplanet Data Explorer</h1>
+    <p class="data summary">
+      This data is provided by Planetary Habitability Laboratory, listing most confirmed Exoplanet known to science.
+    </p>
+  </header>
 
-  <section id="axis-option">
+  <section id="axis-options">
     <div class="axis container">
-      <p class="dropdown label">y-axis</p>
-      <select name="Value 1" id="y-axis">
-        <option value="1">value 1</option>
-        <option value="2">value 2</option>
-      </select>
-      
+      <div class="dropdown container">
+        <p class="dropdown label">y-axis</p>
+        <select name="Value 1" id="y-axis">
+          <option value="1">value 1</option>
+          <option value="2">value 2</option>
+        </select>
+      </div>
+
+      <div class="histogram container">
+
+      </div>
     </div>
 
     <div class="axis container">
-      <p class="dropdown label">x-axis</p>
-      <select name="Value 2" id="x-axis">
-        <option value="1">value 1</option>
-        <option value="2">value 2</option>
-      </select>
+      <div class="dropdown container">
+        <p class="dropdown label">x-axis</p>
+        <select name="Value 2" id="x-axis">
+          <option value="1">value 1</option>
+          <option value="2">value 2</option>
+        </select>
+      </div>
+      
+      <div class="histogram container">
+      
+      </div>
     </div>
   </section>
 
   <div id="graph container">
-    <svg id="graph" width='1300' height='651'></svg>
+    <svg id="graph" width='1300' height='500'></svg>
   </div>
 
   <footer>&copy; Planetary Habitability Laboratory</footer> 
