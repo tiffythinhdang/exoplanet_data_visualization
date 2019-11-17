@@ -2,6 +2,28 @@
   display: flex;
 }
 
+/* Color of rectangle */
 rect {
   fill: steelblue;
+  font-family: 'Varela Round', sans-serif;
+}
+
+/* Text size for graph */
+text {
+  font-size: 12px;
+  font-family: 'Varela Round', sans-serif;
+}
+
+.graph.title {
+  font-size: 24px;
+  padding-bottom: 50px;
+}
+
+.graph.axis.title {
+  font-size: 18px;
+  fill: black;
+}
+
+.tick > line {
+  stroke: lightgray;
 }

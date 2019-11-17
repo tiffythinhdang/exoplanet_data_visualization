@@ -5,7 +5,8 @@ import {
   scaleBand,
   max,
   axisLeft,
-  axisBottom
+  axisBottom,
+  // format => if needed to format x-axis value
 } from 'd3';
 import { numericColNames } from './numeric_cols';
 import { dropdownMenu } from './dropdown_menu';
@@ -19,12 +20,14 @@ const height = +svg.attr("height");
 
 
 const render = (data) => {
-  // Initialize x-value and y-value. Use this to change col associated with each axis 
-  const xValue = (d) => d[numericColNames[45]];
-  const yValue = (d) => d["P. Name"];
+  // Initialize x-value and y-value. Use this to change col associated with each axis
+  const xColName = numericColNames[45];
+  const yColName = "P. Name";
+  const xValue = (d) => d[xColName];
+  const yValue = (d) => d[yColName];
 
   // Set margin for the graph:
-  const margin = { top: 50, right: 50, bottom: 50, left: 100,}
+  const margin = { top: 50, right: 50, bottom: 100, left: 200}
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
@@ -44,25 +47,47 @@ const render = (data) => {
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
   
   // Set up x-axis and y-axis
-  const yAxis = axisLeft(yScale)
   const xAxis = axisBottom(xScale)
-  g.append('g').call(yAxis);
-  g.append('g').call(xAxis)
-    .attr('transform', `translate(0, ${innerHeight})`) //move the axis to the bottom
+    .tickSize(-innerHeight);
+  const yAxis = axisLeft(yScale);
 
-// Render circle for each row
-//   g.selectAll('circle').data(data)
-//     .enter().append('circle')
-//       .attr('cx', 100)
-//       .attr('cy', 100)
-//       .attr('r', 20);
-// };
+  const xAxisGroup = g.append('g').call(xAxis)
+    .attr('transform', `translate(0, ${innerHeight})`); //move the axis to the bottom
+  const yAxisGroup = g.append('g').call(yAxis);
 
+  // Set axis label
+  xAxisGroup.append('text')
+    .text(`${xColName}`)
+    .attr("class", "graph axis title")
+    .attr('y', 60)
+    .attr('x', innerWidth / 2);
+
+  yAxisGroup.append('text')
+    .text(`${yColName}`)
+    .attr("class", "graph axis title")
+    .attr('y', innerHeight / 2)
+    .attr('x', -100);
+
+  // Render circle for each row
+  //   g.selectAll('circle').data(data)
+  //     .enter().append('circle')
+  //       .attr('cx', 100)
+  //       .attr('cy', 100)
+  //       .attr('r', 20);
+  // };
+
+  // Render rectangle
   g.selectAll('rect').data(data)
     .enter().append('rect')
       .attr('y', d => yScale( yValue(d) ))
       .attr('width', d => xScale( xValue(d) ))
       .attr('height', yScale.bandwidth());
+
+  // Render title of graph
+  g.append('text')
+    .text(`${xColName} vs ${yColName}`)
+    .attr("class", "graph title")
+    .attr('y', -20);
 };
 
 // Read data and change values of numeric columns from string to number
