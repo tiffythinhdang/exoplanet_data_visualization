@@ -16,11 +16,16 @@ header {
 #axis-options {
   padding: 25px 20%;
   display: flex;
+  justify-content: center;
+}
+
+.axis.container {
+  margin: 10px 25px;
 }
 
 /* Color of circle */
 circle {
-  fill: #EED266;
+  fill: #FFEDA7;
   opacity: 0.3;
   font-family: 'Varela Round', sans-serif;
 }
@@ -43,4 +48,23 @@ text {
 
 .tick > line {
   stroke: #69A0D1;
+}
+
+/* dropdown menu */
+.selector {
+  height: 48px;
+  width: 220px;
+  background-color: #69A0D1;
+  border-radius: 4px;
+  border: 0px solid;
+  font-size: 14px;
+  color: #FFFFFF;
+  padding-left: 15px;
+  margin: 10px 0px;
+  box-sizing: border-box;
+}
+
+.selector:focus {
+  border: 1px solid #FFFFFF;
+  outline: none;
 }
