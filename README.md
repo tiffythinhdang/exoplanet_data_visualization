@@ -17,6 +17,9 @@ by the Planetary Habitability Laboratory.
 * D3
 * HTML/ CSS
 
+## Browser Compatibility (tested)
+* Chrome
+
 ## Running Locally
 In one tab, run:
 ```
