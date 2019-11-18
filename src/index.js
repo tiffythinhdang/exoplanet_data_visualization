@@ -93,6 +93,6 @@ csv('../data/phl_hec_all_confirmed.csv').then(loadedData => {
   });
 
   xColName = numericColNames[4];
-  yColName = numericColNames[31];
+  yColName = numericColNames[25];
   render();
 });
