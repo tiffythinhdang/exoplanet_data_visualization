@@ -8,12 +8,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.(csv|tsv)$/,
-        use: [
-          'csv-loader',
-        ],
-      },
     ],
   },
 };
