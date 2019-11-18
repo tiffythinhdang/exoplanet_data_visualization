@@ -4,6 +4,7 @@ import {
   axisLeft,
   axisBottom,
   max,
+  format,
   histogram
 } from 'd3';
 
@@ -24,34 +25,57 @@ export const histogramGraph = (selection, props) => {
   const innerHeight = histogramHeight - margin.top - margin.bottom;
   const innerWidth = histogramWidth - margin.left - margin.right;
 
-  // X axis: scale and draw:
+  // Initialize a container of the graph 
+  const g = selection.selectAll('.xhistogram-container').data([null]);
+  const gEnter = g
+    .enter().append('g')
+    .attr('class', 'xhistogram-container')
+  gEnter
+    .merge(g)
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+
+  // Map data x-range to graph range
   const xScale = scaleLinear()
     .domain(extent(data, xValue))
     .range([0, innerWidth]);
 
-  selection.append("g")
-    .attr("transform", `translate(0, ${innerHeight})`)
-    .call(axisBottom(xScale));
+  // Set x-axis
+  const axisTickFormat = (number) =>
+    format('~s')(number);
 
-  // set the parameters for the histogram
+  const xAxis = axisBottom(xScale)
+    .tickFormat(axisTickFormat)
+    .tickPadding(15);
+
+  const xAxisGroup = g.select('.xhistogram-x-axis');
+  const xAxisGroupEnter = gEnter
+    .append('g')
+    .attr('class', 'xhistogram-x-axis');
+  xAxisGroup
+    .merge(xAxisGroupEnter)
+    .call(xAxis)
+    .attr('transform', `translate(0, ${innerHeight})`) //move the axis to the bottom
+
+
+  // Set the parameters for the histogram
   const histogramG = histogram()
     .value(xValue)   // I need to give the vector of value
     .domain(xScale.domain())  // then the domain of the graphic
     .thresholds(xScale.ticks(numBins)); // then the numbers of bins
 
+
   // And apply this function to data to get the bins
   const bins = histogramG(data);
 
 
-  // Y axis: scale and draw:
+  // Map data y-range to graph range
   const yScale = scaleLinear()
+    .domain([0, max(bins, (d) => d.length)])
     .range([innerHeight, 0]);
-
-  yScale.domain( [0, max(bins, (d) => d.length)] );
 
   selection.append("g")
     .call(axisLeft(yScale));
-
 
   // append the bar rectangles to the svg element
   selection.selectAll("rect")
