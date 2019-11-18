@@ -84,7 +84,7 @@ const render = () => {
 };
 
 // Read data, change values of numeric columns from string to number, and render
-csv('../data/phl_hec_all_confirmed.csv').then(loadedData => {
+csv('../dist/phl_hec_all_confirmed.csv').then(loadedData => {
   data = loadedData;
   data.forEach((d) => {
     numericColNames.forEach(col => {
