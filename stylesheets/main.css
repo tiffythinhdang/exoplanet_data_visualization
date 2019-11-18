@@ -1,29 +1,115 @@
-#axis-options {
+/* Since the css for these graphs are minimal, i don't separate them.
+With larger files, it's best to break them into css file specific for each graph */
+
+/* Non-svg elements */
+body {
+  background-color: #4B7DA9;
+  color: #FFFFFF;
+  line-height: 165%;
+}
+
+header {
+  padding: 50px 10%;
+}
+
+.main-header {
+  font-size: 36px;
+  margin-bottom: 50px;
+}
+
+.data-summary {
+  font-size: 18px;
+}
+
+.instruction {
+  padding: 0px 10%;
+  font-style: italic;
+  color: #69A0D1;
+}
+
+footer {
+  padding: 25px 10%;
+  color: #69A0D1;
+}
+
+/* Dropdown menu */
+.selector {
+  height: 48px;
+  width: 220px;
+  background-color: #69A0D1;
+  border-radius: 4px;
+  border: 0px;
+  font-size: 14px;
+  color: #FFFFFF;
+  padding-left: 15px;
+  margin: 10px 0px;
+  box-sizing: border-box;
+}
+
+.selector:focus {
+  border: 1px solid #FFFFFF;
+  outline: none;
+}
+
+#axis-menu-options {
+  padding: 25px 10%;
   display: flex;
 }
 
-/* Color of rectangle */
+.axis-menu-container {
+  margin: 10px 25px;
+  margin-left: 0;
+}
+
+#graph-container {
+  width: 100%;
+  height: 651px;
+  display: flex;
+  padding: 25px 10%;
+  padding-bottom: 0px;
+  position: relative;
+  left: -100px;
+}
+
+/* Histogram */
 rect {
-  fill: steelblue;
+  fill: #FFFFFF;
+  opacity: 0.3;
   font-family: 'Varela Round', sans-serif;
 }
 
-/* Text size for graph */
+.histogram-container {
+  left: -50px;
+  margin-top: 25px;
+  position: relative;
+}
+
+.histogram-label {
+  font-size: 12px;
+  fill: #FFFFFF;
+}
+
+/* Scattter Plot */
+circle {
+  fill: #FFEDA7;
+  opacity: 0.3;
+}
+
 text {
   font-size: 12px;
   font-family: 'Varela Round', sans-serif;
 }
 
-.graph.title {
+.graph-label {
   font-size: 24px;
-  padding-bottom: 50px;
+  fill: #FFFFFF;
 }
 
-.graph.axis.title {
+.axis-label {
   font-size: 18px;
-  fill: black;
+  fill: #FFFFFF;
 }
 
 .tick > line {
-  stroke: lightgray;
+  stroke: #69A0D1;
 }
