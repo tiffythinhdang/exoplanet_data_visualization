@@ -1,39 +1,74 @@
+import {
+  scaleLinear,
+  extent,
+  axisLeft,
+  axisBottom,
+  max,
+  histogram
+} from 'd3';
 
-export const histogram = (selection, props) => {
+export const histogramGraph = (selection, props) => {
+  const {
+    title,
+    xValue,
+    // xAxisLabel,
+    // yValue,
+    // yAxisLabel,
+    numBins,
+    margin,
+    histogramWidth,
+    histogramHeight,
+    data
+  } = props;
+
+  const innerHeight = histogramHeight - margin.top - margin.bottom;
+  const innerWidth = histogramWidth - margin.left - margin.right;
 
   // X axis: scale and draw:
-  var x = d3.scaleLinear()
-    .domain([0, 1000])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
-    .range([0, width]);
-  svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+  const xScale = scaleLinear()
+    .domain(extent(data, xValue))
+    .range([0, innerWidth]);
+
+  selection.append("g")
+    .attr("transform", `translate(0, ${innerHeight})`)
+    .call(axisBottom(xScale));
 
   // set the parameters for the histogram
-  var histogram = d3.histogram()
-    .value(function (d) { return d.price; })   // I need to give the vector of value
-    .domain(x.domain())  // then the domain of the graphic
-    .thresholds(x.ticks(70)); // then the numbers of bins
+  const histogramG = histogram()
+    .value(xValue)   // I need to give the vector of value
+    .domain(xScale.domain())  // then the domain of the graphic
+    .thresholds(xScale.ticks(numBins)); // then the numbers of bins
 
   // And apply this function to data to get the bins
-  var bins = histogram(data);
+  const bins = histogramG(data);
+
 
   // Y axis: scale and draw:
-  var y = d3.scaleLinear()
-    .range([height, 0]);
-  y.domain([0, d3.max(bins, function (d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
-  svg.append("g")
-    .call(d3.axisLeft(y));
+  const yScale = scaleLinear()
+    .range([innerHeight, 0]);
+
+  yScale.domain( [0, max(bins, (d) => d.length)] );
+
+  selection.append("g")
+    .call(axisLeft(yScale));
+
 
   // append the bar rectangles to the svg element
-  svg.selectAll("rect")
+  selection.selectAll("rect")
     .data(bins)
     .enter()
     .append("rect")
     .attr("x", 1)
-    .attr("transform", function (d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-    .attr("width", function (d) { return x(d.x1) - x(d.x0) - 1; })
-    .attr("height", function (d) { return height - y(d.length); })
-    .style("fill", "#69b3a2")
-
+    .attr("transform", (d) => {
+      // debugger
+      return `translate(${xScale(d.x0)}, ${yScale(d.length)})`
+    })
+    .attr("width", (d) => {
+      // debugger
+      return xScale(d.x1) - xScale(d.x0) - 1
+    })
+    .attr("height", (d) => {
+      // debugger
+      return innerHeight - yScale(d.length)
+    })
 };

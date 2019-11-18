@@ -24,15 +24,13 @@ header {
 }
 
 footer {
-  padding: 25px 20%;
-  text-align: center;
+  padding: 25px 10%;
   color: #69A0D1;
 }
 
 #axis-options {
   padding: 25px 10%;
   display: flex;
-  /* justify-content: center; */
 }
 
 .axis.container {
@@ -50,6 +48,12 @@ footer {
 /* Color of circle */
 circle {
   fill: #FFEDA7;
+  opacity: 0.3;
+}
+
+/* Color of histogram */
+rect {
+  fill: #FFFFFF;
   opacity: 0.3;
   font-family: 'Varela Round', sans-serif;
 }

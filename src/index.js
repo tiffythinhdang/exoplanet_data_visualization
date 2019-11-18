@@ -5,13 +5,18 @@ import {
 import { numericColNames } from './numeric_cols';
 import { dropdownMenu } from './dropdown_menu';
 import { scatterPlot } from './scatter_plot';
+import { histogramGraph } from './histogram';
 
-// Get the graph area
+// Get the all the graphs
 const graph = select('#scatter-plot-graph');
+const histogramX = select('#histogram-graph-x');
+const histogramY = select('#histogram-graph-y');
 
-// Parse width and height of the graph area to number
+// Parse width and height of the graph areas to number
 const width = +graph.attr("width");
 const height = +graph.attr("height");
+const histogramWidth = +histogramX.attr("width");
+const histogramHeight = +histogramX.attr("height");
 
 // Initialize data and col
 let data;
@@ -29,6 +34,7 @@ const onYColumnClicked = (column) => {
   render();
 };
 
+
 const render = () => {
   // Select and render drop-down menu
   select('#x-menu')
@@ -45,8 +51,8 @@ const render = () => {
       selectedOption: yColName
     });
 
+
   // Render scatter plot
-  // debugger
   graph.call(scatterPlot, {
     title: `${ xColName } vs ${ yColName }`,
     xValue: (d) => d[xColName],
@@ -59,6 +65,22 @@ const render = () => {
     height,
     data
   })
+
+  // Render histograms
+  histogramX.call(histogramGraph, {
+    title: `${xColName} Histogram`,
+    xValue: (d) => d[xColName],
+    // xAxisLabel: xColName,
+    // yValue: (d) => d[yColName],
+    // yAxisLabel: yColName,
+    numBins: 10,
+    margin: { top: 20, right: 20, bottom: 20, left: 20 },
+    histogramWidth,
+    histogramHeight,
+    data
+  })
+
+
 };
 
 // Read data, change values of numeric columns from string to number, and render
