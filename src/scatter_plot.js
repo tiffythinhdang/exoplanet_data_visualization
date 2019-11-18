@@ -23,34 +23,30 @@ export const scatterPlot = (selection, props) => {
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
-  
   // Map data x-range to graph range
   const xScale = scaleLinear()
     .domain(extent(data, xValue))
     .range([0, innerWidth])
     .nice();
 
-
   // Map data y-range to graph range
   const yScale = scaleLinear()
-    .domain(extent(data, xValue).reverse())
+    .domain(extent(data, yValue).reverse())
     .range([0, innerHeight])
     .nice();
 
-
-  // Initialize a container of the graph 
+  // Initialize a container of the graph
   const g = selection.selectAll('.container').data([null]);
   const gEnter = g
     .enter().append('g')
-      .attr('class', 'container')
+      .attr('class', 'container');
+
   gEnter
     .merge(g)
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-
   // Set x-axis and y-axis
-  const axisTickFormat = (number) =>
-    format('~s')(number);
+  const axisTickFormat = (number) => format('~s')(number);
 
   const xAxis = axisBottom(xScale)
     .tickFormat(axisTickFormat)
@@ -62,26 +58,26 @@ export const scatterPlot = (selection, props) => {
     .tickSize(-innerWidth)
     .tickPadding(15);
 
-
   const xAxisGroup = g.select('.x-axis');
   const xAxisGroupEnter = gEnter
     .append('g')
-    .attr('class', 'x-axis');
+      .attr('class', 'x-axis');
+
   xAxisGroup
     .merge(xAxisGroupEnter)
-    .call(xAxis)
-    .attr('transform', `translate(0, ${innerHeight})`) //move the axis to the bottom
-    .selectAll('.domain').remove();
-  
+      .attr('transform', `translate(0, ${innerHeight})`) //move the axis to the bottom
+      .call(xAxis)
+      .selectAll('.domain').remove();
+
   const yAxisGroup = g.select('.y-axis');
   const yAxisGroupEnter = gEnter
     .append('g')
       .attr('class', 'y-axis')
+
   yAxisGroup
     .merge(yAxisGroupEnter)
       .call(yAxis)
       .selectAll('.domain').remove();
-
 
   // Set x-axis and y-axis labels
   const xAxisLabelText = xAxisGroupEnter
@@ -91,7 +87,7 @@ export const scatterPlot = (selection, props) => {
     .merge(xAxisGroup.select(".axis-label"))
       .attr('x', innerWidth / 2)
       .text(xAxisLabel);
-    
+
   const yAxisLabelText = yAxisGroupEnter
     .append('text')
       .attr("class", "axis-label")
@@ -102,10 +98,10 @@ export const scatterPlot = (selection, props) => {
       .attr('x', -innerHeight / 2)
       .text(yAxisLabel);
 
-
   // Render scattered dots
   const circles = g.merge(gEnter)
     .selectAll('circle').data(data);
+
   circles
     .enter().append('circle')
       .attr('cx', innerWidth / 2)
@@ -117,7 +113,6 @@ export const scatterPlot = (selection, props) => {
       .attr('cy', d => yScale(yValue(d)))
       .attr('cx', d => xScale(xValue(d)))
       .attr('r', circleRadius);
-
 
   // Render graph label
   const titleGroup = g.select('.graph-label');

@@ -1,7 +1,4 @@
-import { 
-  select, 
-  csv
-} from 'd3';
+import { select, csv } from 'd3';
 import { numericColNames } from './numeric_cols';
 import { dropdownMenu } from './dropdown_menu';
 import { scatterPlot } from './scatter_plot';
@@ -34,7 +31,6 @@ const onYColumnClicked = (column) => {
   render();
 };
 
-
 const render = () => {
   // Select and render drop-down menu
   select('#x-menu')
@@ -51,7 +47,6 @@ const render = () => {
       selectedOption: yColName
     });
 
-
   // Render scatter plot
   graph.call(scatterPlot, {
     title: `${ xColName } vs ${ yColName }`,
@@ -64,7 +59,7 @@ const render = () => {
     width,
     height,
     data
-  })
+  });
 
   // Render histograms
   histogramX.call(histogramGraph, {
@@ -75,7 +70,7 @@ const render = () => {
     histogramWidth,
     histogramHeight,
     data
-  })
+  });
 
   histogramY.call(histogramGraph, {
     title: `${yColName} Histogram`,
@@ -85,7 +80,7 @@ const render = () => {
     histogramWidth,
     histogramHeight,
     data
-  })
+  });
 };
 
 // Read data, change values of numeric columns from string to number, and render
@@ -94,8 +89,9 @@ csv('../data/phl_hec_all_confirmed.csv').then(loadedData => {
   data.forEach((d) => {
     numericColNames.forEach(col => {
       d[col] = +d[col];
-    })     
-  })
+    })
+  });
+
   xColName = numericColNames[4];
   yColName = numericColNames[31];
   render();

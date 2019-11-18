@@ -9,9 +9,7 @@ export const dropdownMenu = (selection, props) => {
   select = select.enter().append('select')
     .attr('class', 'selector')
     .merge(select)
-      .on('change', function () {
-       onOptionClicked(this.value);
-      });
+      .on('change', function() {onOptionClicked(this.value)});
 
   const option = select.selectAll('option').data(options);
   option.enter().append('option')
