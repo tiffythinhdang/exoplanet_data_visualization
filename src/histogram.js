@@ -12,9 +12,6 @@ export const histogramGraph = (selection, props) => {
   const {
     title,
     xValue,
-    // xAxisLabel,
-    // yValue,
-    // yAxisLabel,
     numBins,
     margin,
     histogramWidth,
@@ -26,10 +23,10 @@ export const histogramGraph = (selection, props) => {
   const innerWidth = histogramWidth - margin.left - margin.right;
 
   // Initialize a container of the graph 
-  const g = selection.selectAll('.xhistogram-container').data([null]);
+  const g = selection.selectAll('.histogram-container').data([null]);
   const gEnter = g
     .enter().append('g')
-    .attr('class', 'xhistogram-container')
+    .attr('class', 'histogram-container')
   gEnter
     .merge(g)
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
@@ -38,61 +35,87 @@ export const histogramGraph = (selection, props) => {
   // Map data x-range to graph range
   const xScale = scaleLinear()
     .domain(extent(data, xValue))
-    .range([0, innerWidth]);
+    .range([0, innerWidth])
+    .nice();
 
   // Set x-axis
   const axisTickFormat = (number) =>
     format('~s')(number);
 
   const xAxis = axisBottom(xScale)
+    .ticks(10)
     .tickFormat(axisTickFormat)
-    .tickPadding(15);
+    .tickPadding(5);
 
-  const xAxisGroup = g.select('.xhistogram-x-axis');
+  const xAxisGroup = g.select('.histogram-x-axis');
   const xAxisGroupEnter = gEnter
     .append('g')
-    .attr('class', 'xhistogram-x-axis');
+    .attr('class', 'histogram-x-axis');
   xAxisGroup
     .merge(xAxisGroupEnter)
     .call(xAxis)
-    .attr('transform', `translate(0, ${innerHeight})`) //move the axis to the bottom
+    .attr('transform', `translate(0, ${innerHeight})`); //move the axis to the bottom
 
 
   // Set the parameters for the histogram
   const histogramG = histogram()
-    .value(xValue)   // I need to give the vector of value
-    .domain(xScale.domain())  // then the domain of the graphic
-    .thresholds(xScale.ticks(numBins)); // then the numbers of bins
+    .value(xValue)   
+    .domain(xScale.domain())
+    .thresholds(xScale.ticks(numBins)); 
 
-
-  // And apply this function to data to get the bins
+  // Apply this function to data to get the bins
   const bins = histogramG(data);
 
 
   // Map data y-range to graph range
   const yScale = scaleLinear()
     .domain([0, max(bins, (d) => d.length)])
-    .range([innerHeight, 0]);
+    .range([innerHeight, 0])
+    .nice();
 
-  selection.append("g")
-    .call(axisLeft(yScale));
+  // Set y-axis
+  const yAxis = axisLeft(yScale)
+    .ticks(5)
+    .tickFormat(axisTickFormat)
+    .tickPadding(5);
 
-  // append the bar rectangles to the svg element
+  const yAxisGroup = g.select('.histogram-y-axis');
+  const yAxisGroupEnter = gEnter
+    .append('g')
+    .attr('class', 'histogram-y-axis');
+  yAxisGroup
+    .merge(yAxisGroupEnter)
+    .call(yAxis);
+
+
+  // Render the bars
   selection.selectAll("rect")
     .data(bins)
     .enter()
     .append("rect")
     .attr("x", 1)
-    .attr("transform", (d) => {
-      // debugger
-      return `translate(${xScale(d.x0)}, ${yScale(d.length)})`
-    })
-    .attr("width", (d) => {
-      // debugger
-      return xScale(d.x1) - xScale(d.x0) - 1
-    })
-    .attr("height", (d) => {
-      // debugger
-      return innerHeight - yScale(d.length)
-    })
+    .attr("transform", (d) => 
+      `translate(
+        ${xScale(d.x0) + margin.left}, ${yScale(d.length) + margin.top}
+      )`
+    )
+    .attr("width", (d) => xScale(d.x1) - xScale(d.x0) - 1)
+    .attr("height", (d) => innerHeight - yScale(d.length));
+
+
+  // Render graph label
+  const titleGroup = g.select('.histogram-label');
+  const titleGroupEnter = gEnter
+    .append('g')
+    .attr('class', 'histogram-label');
+     
+  titleGroup
+    .merge(titleGroupEnter);
+
+  const graphTitle = titleGroupEnter
+    .append('text')
+      .attr("class", "histogram-label")
+      .attr('y', -15)
+    .merge(titleGroup.select(".histogram-label"))
+      .text(title);
 };

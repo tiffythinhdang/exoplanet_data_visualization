@@ -70,17 +70,22 @@ const render = () => {
   histogramX.call(histogramGraph, {
     title: `${xColName} Histogram`,
     xValue: (d) => d[xColName],
-    // xAxisLabel: xColName,
-    // yValue: (d) => d[yColName],
-    // yAxisLabel: yColName,
     numBins: 10,
-    margin: { top: 20, right: 20, bottom: 20, left: 20 },
+    margin: { top: 25, right: 20, bottom: 20, left: 50 },
     histogramWidth,
     histogramHeight,
     data
   })
 
-
+  histogramY.call(histogramGraph, {
+    title: `${yColName} Histogram`,
+    xValue: (d) => d[yColName],
+    numBins: 10,
+    margin: { top: 25, right: 20, bottom: 20, left: 50 },
+    histogramWidth,
+    histogramHeight,
+    data
+  })
 };
 
 // Read data, change values of numeric columns from string to number, and render

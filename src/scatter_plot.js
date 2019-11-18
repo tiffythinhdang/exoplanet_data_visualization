@@ -123,14 +123,15 @@ export const scatterPlot = (selection, props) => {
   const titleGroup = g.select('.graph-label');
   const titleGroupEnter = gEnter
     .append('g')
-    .attr('class', 'graph-label')
+    .attr('class', 'graph-label');
+
   titleGroup
-    .merge(titleGroupEnter)
+    .merge(titleGroupEnter);
 
   const graphTitle = titleGroupEnter
     .append('text')
       .attr("class", "graph-label")
-      .attr('y', -50)
+      .attr('y', -30)
     .merge(titleGroup.select(".graph-label"))
-      .text(`${title}`);
+      .text(title);
 };
