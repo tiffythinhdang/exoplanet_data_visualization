@@ -12,25 +12,25 @@
 
 <body>
   <header>
-    <h1 class="main header">Exoplanet Data Explorer</h1>
-    <p class="data summary">
-      This data is provided by Planetary Habitability Laboratory, listing most confirmed Exoplanet known to science.
+    <h1 class="main-header">Exoplanet Data Explorer</h1>
+    <p class="data-summary">
+      An interactive visualization of relationships between different sets of quantitive data for the majority of confirmed Exoplanet known to science by the Planetary Habitability Laboratory.
     </p>
   </header>
+
+  <p class="instruction">
+    Choose the x and y value that you want to compare.
+  </p>
 
   <section id="axis-options">
     <div class="axis container">
       <div class="dropdown container">
         <p class="dropdown label">x-axis</p>
         <div id="x-menu"></div>
-        <!-- <select name="Value 1" id="y-axis">
-          <option value="1">value 1</option>
-          <option value="2">value 2</option>
-        </select> -->
       </div>
 
       <div class="histogram container">
-
+        <svg id="histogram-graph-x" width='400' height='180'></svg>
       </div>
     </div>
 
@@ -38,20 +38,16 @@
       <div class="dropdown container">
         <p class="dropdown label">y-axis</p>
         <div id="y-menu"></div>
-        <!-- <select name="Value 2" id="x-axis">
-          <option value="1">value 1</option>
-          <option value="2">value 2</option>
-        </select> -->
       </div>
       
       <div class="histogram container">
-      
+        <svg id="histogram-graph-y" width='400' height='180'></svg>
       </div>
     </div>
   </section>
 
-  <div id="graph container">
-    <svg id="graph" width='1300' height='651'></svg>
+  <div id="graph-container">
+    <svg id="scatter-plot-graph" width='1300' height='651'></svg>
   </div>
 
   <footer>&copy; Planetary Habitability Laboratory</footer> 

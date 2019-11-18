@@ -1,69 +1,67 @@
 import { 
   select, 
-  csv, 
-  scaleLinear,
-  extent,
-  axisLeft,
-  axisBottom,
-  // format => if needed to format x-axis value
+  csv
 } from 'd3';
 import { numericColNames } from './numeric_cols';
 import { dropdownMenu } from './dropdown_menu';
 import { scatterPlot } from './scatter_plot';
 
 // Get the graph area
-const svg = select('#graph');
+const graph = select('#scatter-plot-graph');
 
 // Parse width and height of the graph area to number
-const width = +svg.attr("width");
-const height = +svg.attr("height");
+const width = +graph.attr("width");
+const height = +graph.attr("height");
 
-// Initialize data
+// Initialize data and col
 let data;
 let xColName;
 let yColName;
 
-//Helper function for choosing drop down
-const onXColumnClicked = column => {
+// Callback function for choosing drop down
+const onXColumnClicked = (column) => {
   xColName = column;
   render();
 };
 
-const onYColumnClicked = column => {
+const onYColumnClicked = (column) => {
   yColName = column;
   render();
 };
 
 const render = () => {
+  // Select and render drop-down menu
   select('#x-menu')
     .call(dropdownMenu, {
       options: numericColNames,
       onOptionClicked: onXColumnClicked,
-      // selectedOption: xColumn
+      selectedOption: xColName
     });
 
   select('#y-menu')
     .call(dropdownMenu, {
       options: numericColNames,
       onOptionClicked: onYColumnClicked,
-      // selectedOption: yColumn
+      selectedOption: yColName
     });
 
-  svg.call(scatterPlot, {
+  // Render scatter plot
+  // debugger
+  graph.call(scatterPlot, {
     title: `${ xColName } vs ${ yColName }`,
     xValue: (d) => d[xColName],
     xAxisLabel: xColName,
     yValue: (d) => d[yColName],
     yAxisLabel: yColName,
-    circleRadius: 10,
-    margin: { top: 75, right: 50, bottom: 100, left: 200 },
+    circleRadius: 8,
+    margin: { top: 75, right: 100, bottom: 100, left: 100 },
     width,
     height,
     data
   })
 };
 
-// Read data and change values of numeric columns from string to number
+// Read data, change values of numeric columns from string to number, and render
 csv('../data/phl_hec_all_confirmed.csv').then(loadedData => {
   data = loadedData;
   data.forEach((d) => {
@@ -71,7 +69,7 @@ csv('../data/phl_hec_all_confirmed.csv').then(loadedData => {
       d[col] = +d[col];
     })     
   })
-  xColName = numericColNames[5];
-  yColName = numericColNames[4];
+  xColName = numericColNames[4];
+  yColName = numericColNames[31];
   render();
 });

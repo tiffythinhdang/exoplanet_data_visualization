@@ -2,7 +2,7 @@ export const dropdownMenu = (selection, props) => {
   const {
     options,
     onOptionClicked,
-    // selectedOption
+    selectedOption
   } = props;
 
   let select = selection.selectAll('select').data([null]);
@@ -17,6 +17,6 @@ export const dropdownMenu = (selection, props) => {
   option.enter().append('option')
     .merge(option)
     .attr('value', d => d)
-    // .property('selected', d => d === selectedOption)
+    .property('selected', d => d === selectedOption)
     .text(d => d);
 };
