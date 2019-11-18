@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/tiffythinhdang/exoplanet_data_visualization#readme",
   "devDependencies": {
+    "csv-loader": "^3.0.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
