@@ -3,6 +3,7 @@ import { numericColNames } from './numeric_cols';
 import { dropdownMenu } from './dropdown_menu';
 import { scatterPlot } from './scatter_plot';
 import { histogramGraph } from './histogram';
+import csvPath from '../data/phl_hec_all_confirmed.csv';
 
 // Get the all the graphs
 const graph = select('#scatter-plot-graph');
@@ -84,7 +85,7 @@ const render = () => {
 };
 
 // Read data, change values of numeric columns from string to number, and render
-csv('../dist/phl_hec_all_confirmed.csv').then(loadedData => {
+csv(csvPath).then(loadedData => {
   data = loadedData;
   data.forEach((d) => {
     numericColNames.forEach(col => {
