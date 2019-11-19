@@ -18,11 +18,10 @@
     "url": "https://github.com/tiffythinhdang/exoplanet_data_visualization/issues"
   },
   "homepage": "https://github.com/tiffythinhdang/exoplanet_data_visualization#readme",
-  "devDependencies": {
-    "file-loader": "^4.2.0"
-  },
+  "devDependencies": {},
   "dependencies": {
     "d3": "^5.12.0",
+    "file-loader": "^4.2.0",
     "lodash": "^4.17.15",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
