@@ -5,6 +5,8 @@ An interactive visualization of relationships between different sets of
 quantitive data for the majority of confirmed Exoplanet known to science 
 by the Planetary Habitability Laboratory.
 
+[Live Demo](https://tiffythinhdang.github.io/exoplanet_data_visualization/)
+
 <a>
   <img 
     src="https://imgur.com/Mo0jnxj.gif"
