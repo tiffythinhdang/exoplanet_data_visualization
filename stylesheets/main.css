@@ -90,6 +90,10 @@ rect {
 }
 
 /* Scattter Plot */
+#scatter-plot-graph {
+  overflow: visible;
+}
+
 circle {
   fill: #FFEDA7;
   opacity: 0.3;
@@ -112,4 +116,28 @@ text {
 
 .tick > line {
   stroke: #69A0D1;
+}
+
+@media only screen and (max-width: 768px) {
+  header {
+    padding: 25px 10%;
+  }
+  .main-header {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+
+  .data-summary {
+    font-size: 14px;
+  }
+
+  .instruction {
+    font-size: 14px;
+  }
+
+  #axis-menu-options {
+    padding: 25px 10%;
+    display: flex;
+    flex-direction: column;
+  }
 }
